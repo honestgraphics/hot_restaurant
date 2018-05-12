@@ -10,7 +10,9 @@ var app = express();
 // app.use tells express/node that you are about to use middleware, which let's you modify requests when they come in
 // urlencoded handles any requests that comes from form data and url from browser
 // json handles any request that has a json body
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 var reservations = [{
@@ -26,7 +28,7 @@ var waitList = [];
 // Routes for displaying HTML pages
 app.get('/', function (req, res) {
   res.sendFile(path.resolve(__dirname, './public/index.html'));
-console.log(path.resolve(__dirname, './public/index.html'));
+  console.log(path.resolve(__dirname, './public/index.html'));
 });
 
 app.get('/tables', function (req, res) {
@@ -59,9 +61,9 @@ app.post('/api/reserve', function (req, res) {
   if (reservations.length >= 5) {
     waitingList.push({
       customerName,
-      phoneNumber,
       customerEmail,
-      customerID
+      customerID,
+      phoneNumber,
     });
     res.send(false)
   } else {
@@ -75,6 +77,6 @@ app.post('/api/reserve', function (req, res) {
   }
 });
 
-app.listen(process.env.PORT ||  3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log('App listening on localhost:3000')
 });
